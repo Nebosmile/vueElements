@@ -1,7 +1,7 @@
 <template>
-    <div>{{leagueid}}
-        <div v-for='item in game[0].categories[0].competitions[0].games' :key ='item.id'>
-            <div v-for="elem in item.teams" :key = 'elem.id'>{{elem.title}}</div>
+    <div>
+        <div class="game_wrap">
+            <div v-for="elem in options.teams" :key = 'elem.id'>{{elem.title}}</div>
         </div>
 
     </div>
@@ -10,7 +10,7 @@
 <script>
 export default {
     props:{
-        leagueid: Number
+        options: Object
     },
     data(){
         return {
@@ -2929,7 +2929,7 @@ export default {
     },
     methods:{
         getInfo(){//запрос на свою лигу
-            console.log(this.$props.leagueid);
+           
             
         }
     },

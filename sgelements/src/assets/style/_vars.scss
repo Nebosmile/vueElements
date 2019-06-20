@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
+
+/**
+*  fonts
+*/
+$font-primary: 'Montserrat', sans-serif; 
+$font-secondary: 'Lato', sans-serif;
+
+/**
+*  colors
+*/
+$background-white-color: #e4e4e4;
+$dusty-orange-color: #ff7424;
+$charcoal-grey-color: #37474f;
+$dark-color: #253036;
+$viridian-color: #23945c;
+$blue-grey-color: #85969d;
+$dark-two-color: #17262a;
+$white-color: #fafafa;
+$white-two-color: #ffffff;
+$very-light-pink-color: #dadada;
+$very-light-pink-two-color: #ebebeb;
+$light-grey-blue-color: #abb9be;
+$orangey-red-color: #f23b38;
+$maize-color: #ecd05d;
+$slate-color: #495f69;
+
+.charcoal-grey-color{
+  background-color:  $charcoal-grey-color; 
+  color: $white-two-color;
+}
+.very-light-pink-two-color{
+    background-color: $very-light-pink-two-color;
+}
+.very-light-pink-color{
+    background-color: $very-light-pink-color;
+}
+.viridian-color{
+    background-color: $viridian-color;
+}
+.border-radius{
+    border-radius: 10px;
+}
+.border-radius-top{
+    border-radius: 10px 10px 0 0;
+}
+.overflow-hidden{
+    overflow: hidden;
+}
+.border-radius-bottom{
+    border-radius: 0 0 10px 10px;
+}
+.cupon-header{
+    & >div{
+        padding: 13px 0 13px;
+        display: flex;
+        width: calc(100% - 40px);
+        justify-content: space-between;
+        position: relative;
+    }
+    .cupon-numbers{
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 1px;
+        width: 14px;
+        height: 14px;
+        max-width: 14px;
+        max-height: 14px;
+        margin-top: -10px;
+        font-family: $font-secondary;
+        border-radius: 7px;
+        font-size: 9px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color:$white-two-color;
+        background-color: $dusty-orange-color;
+        top: -6px;
+        margin: 0 4px;
+        position: relative;
+
+    }
+}
+
+
+
