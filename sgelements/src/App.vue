@@ -48,42 +48,6 @@ export default {
         .sports{
             border: solid 1px #000;
         }
-        .show_hide{
-            position: relative;
-            
-        
-            &:before {
-                cursor: pointer;
-                content: "";
-                width: 0;
-                height: 0;
-                position: absolute;
-                top: 16px;
-                right: 10px;
-                border-top: 6px dashed;
-                border-right: 5px solid transparent;
-                border-left: 5px solid transparent;
-            }
-
-        &.showtree{
-           
-
-            &:before {
-                border-top: 0;
-                border-bottom: 6px dashed;
-                border-right: 5px solid transparent;
-                border-left: 5px solid transparent;
-            }
-        }
-    }
-
-
-        .show_hide{
-            height: 40px;
-            padding-left:10px;
-            font-size: 12px;
-            
-        }
         .league_wrap{
             .show_hide{
                 padding-left:20px;

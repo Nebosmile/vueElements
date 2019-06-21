@@ -2,7 +2,7 @@
   <button 
     class="sb-button"
     :class="{'sb-button-primary': !plain, 'sb-button-primary': plain}"
-    @click="$emit('click', $event)">
+    @click="check">
 
      <slot />
 
@@ -15,6 +15,19 @@ export default {
 
   props:{
     plain: Boolean,
+  },
+  methods:{
+    check(){
+      if(this.plain){
+        this.$emit('click')
+      }
+      return
+    }
   }
 }
 </script>
+<style lang='scss'>
+  @import "@/assets/style/_vars.scss";
+  @import "./_sb-button.scss";
+</style>
+

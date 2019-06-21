@@ -26,6 +26,12 @@ $orangey-red-color: #f23b38;
 $maize-color: #ecd05d;
 $slate-color: #495f69;
 
+.lato{
+    font-family: $font-secondary;
+}
+.flex{
+    display: flex;
+}
 .charcoal-grey-color{
   background-color:  $charcoal-grey-color; 
   color: $white-two-color;
@@ -36,8 +42,17 @@ $slate-color: #495f69;
 .very-light-pink-color{
     background-color: $very-light-pink-color;
 }
+.white-color{
+    background-color: $white-color;
+}
 .viridian-color{
     background-color: $viridian-color;
+}
+.dusty-orange-color{
+    background-color: $dusty-orange-color;
+}
+.dusty-orange-color-text{
+    color:$dusty-orange-color
 }
 .border-radius{
     border-radius: 10px;
@@ -51,39 +66,15 @@ $slate-color: #495f69;
 .border-radius-bottom{
     border-radius: 0 0 10px 10px;
 }
-.cupon-header{
-    & >div{
-        padding: 13px 0 13px;
-        display: flex;
-        width: calc(100% - 40px);
-        justify-content: space-between;
-        position: relative;
-    }
-    .cupon-numbers{
-        display: inline-block;
-        box-sizing: border-box;
-        padding: 1px;
-        width: 14px;
-        height: 14px;
-        max-width: 14px;
-        max-height: 14px;
-        margin-top: -10px;
-        font-family: $font-secondary;
-        border-radius: 7px;
-        font-size: 9px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        color:$white-two-color;
-        background-color: $dusty-orange-color;
-        top: -6px;
-        margin: 0 4px;
-        position: relative;
 
-    }
+.bold{
+    font-weight: bold;
 }
-
+.line-through{
+    text-decoration: line-through;
+}
+input::placeholder{
+    color:$light-grey-blue-color;
+}
 
 

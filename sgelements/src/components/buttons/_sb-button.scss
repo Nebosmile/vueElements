@@ -21,9 +21,13 @@
   user-select: none;
   font-size: 1rem;
   text-transform: uppercase;
+  background-color: $dusty-orange-color;
+  opacity: 0.5;
+  color: $white-two-color;
 
   // types
   &-primary {
+    opacity: 1;
     background-color: $dusty-orange-color;
     color: $white-two-color;
   }
@@ -32,6 +36,9 @@
     background-color: transparent;
     color: $white-two-color;
     border: 3px solid $white-two-color;
+  }
+  &:focus{
+    outline: none;
   }
 }
 
