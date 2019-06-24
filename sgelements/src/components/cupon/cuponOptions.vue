@@ -1,5 +1,5 @@
 <template>
-    <div class="cupon-options">
+    <div class="cupon-options very-light-pink-color">
         <div :class='{"showtree":showtree}' class='show_hide very-light-pink-two-color' @click='showHide()' >
             <div>
                 <img src="./img/gear.png" alt="">
@@ -17,10 +17,11 @@ export default {
     data(){
         return{
             showtree:false,
-            active:{title: 'Всегда спрашивать при изминении коєффициентов',value:'allwaysAsk'},
+            active:{title: 'Всегда спрашивать при изминении коєффициентов',value:'always_ask'},
             cuponlist:[
-                {title: 'Всегда спрашивать при изминении коєффициентов',value:'allwaysAsk'},
-                {title: 'Не спрашивать',value:'notAsk'}, 
+                {title: 'Всегда спрашивать при изминении коєффициентов',value:'always_ask'},
+                {title: 'Принять более высокие коэффициенты',value:'accept_largest'},
+                {title: 'Принять какие-либо коэффициенты',value:'accept_all'}, 
             ]
         }
     },
@@ -45,10 +46,13 @@ export default {
 
 <style lang="scss">
     .cupon-options{
-        margin: 10px 0;
-        width: 260px;
+        position: relative;
+        margin-top: 5px;
+        padding: 5px 10px;
         font-size:11px;
         text-align: left;
+        display: flex;
+        justify-content: center;
         & .show_hide{
             position: relative;
             width: 260px;
@@ -85,6 +89,7 @@ export default {
             
         }
         .tree{
+            top: 30px;
             max-width: 260px;
             box-shadow: 0 8px 16px 0 rgba(23, 38, 42, 0.25);
             border-radius: 10px;

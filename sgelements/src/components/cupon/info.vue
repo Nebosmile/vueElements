@@ -9,7 +9,7 @@
             
             <div class= 'info-content  very-light-pink-color'>
                 <div>{{options.leagua}}</div>
-                <div>{{options.state}}</div>
+                <div>{{options.status}}</div>
                 <div>{{options.comands}}</div>
             </div>
         </div>

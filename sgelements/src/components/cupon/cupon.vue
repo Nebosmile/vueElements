@@ -6,7 +6,7 @@
                 <div>
                     <div>
                         <span>Купон</span>
-                        <span class='cupon-numbers dusty-orange-color'>2</span>
+                        <span class='cupon-numbers dusty-orange-color'>{{cupon_number}}</span>
                     </div>
                     <div class='show_hide_b_wrap'>
                         <div v-if='showtree'>Изменен 1 коэф.</div>
@@ -17,71 +17,38 @@
                 </div>
                 
             </div>
-            <div class='hidewrapitem'>
+            <div class='hidewrapitem' v-if='(!showtree && betslip.length>0)'>
                 <div class='cupon-content' >
                     <div class='very-light-pink-color'>
                         <div class='cupon-instruments'>
-                        <selectCupon></selectCupon>
+                        <selectCupon @change="change_type" v-if='betslip.length >= 2' :betSlipNumber='betslip.length'></selectCupon>
                             <div @click='clearAll' class = 'clear-all very-light-pink-two-color'>
                                 <span>&#128465;</span>   Очистить все
                             </div>
                         </div>
                     </div>
-                    <div class='charcoal-grey-color cupon-titles'>
-                        <div>
-                            <div class='close-x'>&#10006;</div>
-                            <div>Грузия - Гибралтар</div>
-                        </div>
-                        <div>
-                            <img @click='goLive' src="./img/live.png" alt="">
-                            <info :options='infoOptions'></info>
+                    <div v-for = '(item, index) in betslip' :key='item.id'>
+                        <oneCupon @clear=clearOne(index) :options="item" :index='index' :active='betSlipType'></oneCupon>
+                    </div>
+                    <div class='bet-info-wrap'>
+                        <div class='very-light-pink-color cupon-bet-block'>
+                            <div class = 'cupon-bet-block-content'>
+                                <doubleInput v-if='(betSlipType.value!="ordinar")' @click='setMax' :options="doubleInputOptions"></doubleInput>
+                                <cuponOptions></cuponOptions>
+                                <div class='bet-coficient'>
+                                    <div>Общий коэфициент</div>
+                                    <div class='bold'>{{final_coefficient}}</div>
+                                </div>
+                                <div class='bet-winnings'>
+                                    <div>Возможный выигрыш</div>
+                                    <div class='bold'>100 000 грн</div>
+                                </div>
+                                <sbbuttons :plain='plain'>СДЕЛАТЬ СТАВКУ</sbbuttons>
+                            </div>
                             
                         </div>
                     </div>
-                    <div class='cupon-result white-color'>
-                        <div>
-                            <div class='bold'>Результат:</div>
-                            <div>основное время победа Тоттенхем</div>
-                        </div>
-                        <div class='bold'>1.94</div>
-                    </div>
-                    <div class='charcoal-grey-color cupon-titles'>
-                        <div>
-                            <div class='close-x'>&#10006;</div>
-                            <div>Грузия - Гибралтар</div>
-                        </div>
-                        <div>
-                            <info :options='infoOptions'></info>
-                        </div>
-                    </div>
-                    <div class='cupon-total white-color'>
-                        <div>
-                            <div class='bold'>Тотал:</div>
-                            <div>больше 1.5</div>
-                        </div>
-                        <div>
-                            <div class='line-through'>1.94</div>
-                            <div class='bold'>3.54</div>
-                        </div>
-                        
-                    </div>
-                    <div class='very-light-pink-color cupon-bet-block'>
-                        <div class = 'cupon-bet-block-content'>
-                            <doubleInput @click='setMax' :options="doubleInputOptions"></doubleInput>
-                            <cuponOptions></cuponOptions>
-                            <div class='bet-coficient'>
-                                <div>Общий коэфициент</div>
-                                <div class='bold'>5.67</div>
-                            </div>
-                            <div class='bet-winnings'>
-                                <div>Возможный выигрыш</div>
-                                <div class='bold'>100 000 грн</div>
-                            </div>
-                            <sbbuttons @click='makeBet' :plain='plain'>СДЕЛАТЬ СТАВКУ</sbbuttons>
-                            
-                        </div>
-                        
-                    </div>
+
                 </div>
             </div>
 
@@ -92,42 +59,163 @@
 
 <script>
 
+
+import oneCupon from './oneCupon.vue';
 import selectCupon from './selectCupon.vue';
+import sbbuttons from '@/components/buttons/sb-button.vue';
 import doubleInput from './doubleInput.vue';
 import cuponOptions from './cuponOptions.vue';
-import info from './info.vue';
-import sbbuttons from '@/components/buttons/sb-button.vue';
+
 
 export default {
     components:{
+        oneCupon,
         selectCupon,
-        doubleInput,
-        cuponOptions,
         sbbuttons,
-        info
+        doubleInput,
+        cuponOptions
+        
+        
     },
     data(){
         return{
-            infoOptions:{
-                sport:{title:"Футбол",value:"footboll"},
-                leagua:'Суперкубок1 УЕФА',
-                state:'Не начался',
-                comands:'ФК Ливерпуль - Челси ФК'
+            betSlipType:{
+                title: 'Ординар',
+                value:'ordinar'
             },
             doubleInputOptions:{
                 placeholder:'Ставка',
                 buttonName:"MAX",
                 value:''
             },
-            showtree:true
+            betslip:
+            [
+                {
+                    coeff: 1.12,
+                    id: 48596896,
+                    type: "Over",
+                    value: "0.5",
+                    teams:[
+                        {
+                            id: 372711,
+                            title: "Грузия1",
+                            type: "home"
+                        },
+                        {
+                            id: 403193,
+                            title: "Гибралтар1",
+                            type: "away"
+                        }
+                        
+                    ]
+                },
+                                {
+                    coeff: 2.11,
+                    id: 48196896,
+                    type: "Over",
+                    value: "0.5",
+                    teams:[
+                        {
+                            id: 372711,
+                            title: "Грузия2",
+                            type: "home"
+                        },
+                        {
+                            id: 403193,
+                            title: "Гибралтар2",
+                            type: "away"
+                        }
+                        
+                    ]
+                },
+                {
+                    coeff: 4.52,
+                    id: 48596596,
+                    type: "Over",
+                    value: "0.5",
+                    teams:[
+                        {
+                            id: 372711,
+                            title: "Грузия3",
+                            type: "home"
+                        },
+                        {
+                            id: 403193,
+                            title: "Гибралтар3",
+                            type: "away"
+                        }
+                        
+                    ]
+                },
+            ],
+            showtree:true,
+            upData:[
+                                {
+                    coeff: 1.52,
+                    id: 48596896,
+                    type: "Over",
+                    value: "0.5",
+                    teams:[
+                        {
+                            id: 372711,
+                            title: "Грузия1",
+                            type: "home"
+                        },
+                        {
+                            id: 403193,
+                            title: "Гибралтар1",
+                            type: "away"
+                        }
+                        
+                    ]
+                },
+                                {
+                    coeff: 2.01,
+                    id: 48196896,
+                    type: "Over",
+                    value: "0.5",
+                    teams:[
+                        {
+                            id: 372711,
+                            title: "Грузия2",
+                            type: "home"
+                        },
+                        {
+                            id: 403193,
+                            title: "Гибралтар2",
+                            type: "away"
+                        }
+                        
+                    ]
+                },
+                {
+                    coeff: 4.12,
+                    id: 48596596,
+                    type: "Over",
+                    value: "0.5",
+                    teams:[
+                        {
+                            id: 372711,
+                            title: "Грузия3",
+                            type: "home"
+                        },
+                        {
+                            id: 403193,
+                            title: "Гибралтар3",
+                            type: "away"
+                        }
+                        
+                    ]
+                },
+            ]
         }
     },
     methods:{
-        makeBet(){
-           
+        change_type(e){
+            this.betSlipType=e;
         },
-        setMax(){
-            this.doubleInputOptions.value=100;
+        update(){
+
         },
         showHide(){
 
@@ -138,26 +226,45 @@ export default {
             }
         },
         clearAll(){
-            
+            this.betslip=[];
             
         },
-        goLive(){
+        clearOne(index){
+            this.betslip.splice(index, 1);
+        },
+        setMax(){
+            this.doubleInputOptions.value=100;
+        },
 
-        },
     },
     computed:{
+        showObj(){
+
+        },
         plain(){
             if(this.doubleInputOptions.value){
                 return true
             }
             return false;
+        },
+        final_coefficient(){
+            let final = 0;
+            this.betslip.forEach((item)=>{
+                final+=item.coeff;
+            })
+            return final.toFixed(2);
+        },
+        cupon_number(){
+            return this.betslip.length
         }
+
         
     }
 }
 </script>
 
 <style lang='scss'>
+        
         .show_hide_b_wrap{
             display: flex;
             align-items: center;
@@ -196,15 +303,18 @@ export default {
         }
     }
 .cupon{
+    .sb-button{
+        font-size: 18px;
+    }
     .hidewrapitem{
         position: relative;
         z-index: 2;
         overflow: hidden;
     }
-    .cupon-content{
-        transition: margin-top 0.5s;
-        margin-top:-100vh;
-    }
+    // .cupon-content{
+    //     transition: margin-top 0.5s;
+    //     margin-top:-100vh;
+    // }
     &.show{
         .cupon_background{
             position: fixed;
@@ -269,34 +379,23 @@ export default {
             font-size: 12px;
             display:flex;
             justify-content:space-between;
-        }
-        & > div{
             padding: 5px 10px 5px 10px;
-            min-height: 34px;
-            display: flex;
+            min-height: 36px;
             align-items: center; 
             box-sizing: border-box;
         }
-
-        & .clear-all{
-            padding: 5px 5px 5px 10px;
-            height: 24px;
-            border-radius: 5px;
-            box-sizing: border-box;
+            & .clear-all{
+                padding: 5px 5px 5px 10px;
+                height: 24px;
+                border-radius: 5px;
+                box-sizing: border-box;
             
             span{
-                
                 position: relative;
                 top:3px;
                 font-size: 20px;
                 line-height: 0;
             }
-        }
-
-        .cupon-bet-block{
-            padding: 10px;
-            box-sizing: border-box;
-            justify-content:center;
         }
     }
     .cupon-titles{
@@ -316,11 +415,17 @@ export default {
         display: flex;
         justify-content:space-between;
     }
+    .cupon-bet-block{
+        display: flex;
+        justify-content: center;
+        padding: 10px 10px 20px;
+    }
     .cupon-bet-block-content{
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 260px;
+        justify-content: space-between;
         
         & >div{
             width: 100%;
@@ -333,11 +438,11 @@ export default {
     .bet-coficient, .bet-winnings {
         display: flex;
         min-height: 25px;
-        margin: 15px 0;
+        margin: 5px 0;
         justify-content:space-between;
     }
     .bet-coficient{
-        margin-top:30px;
+        margin-top:20px;
         border-bottom: solid 1px #abb9be;
     }
     

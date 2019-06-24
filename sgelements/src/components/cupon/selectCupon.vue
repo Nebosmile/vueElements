@@ -8,19 +8,25 @@
 </template>
 
 <script>
+import { log } from 'util';
 export default {
+    props:{
+        betSlipNumber:Number,
+    },
     data(){
         return{
             showtree:false,
-            active:{title: 'Экспресс',value:'express'},
-            cuponlist:[
-                {title: 'Экспресс',value:'express'},
-                {title: 'Не Экспресс',value:'noexpress'}, 
-            ]
+            active:{title: 'Ординар',value:'ordinar'},
+        // из computed    cuponlist:[
+        //         {title: 'Экспресс',value:'express'},
+        //         {title: 'Ординар',value:'ordinar'}, 
+        //     ]
         }
     },
     methods:{
+        
         setActive(elem){
+            this.$emit('change',elem)
             this.active = elem;
             this.showHide()
         },
@@ -33,6 +39,25 @@ export default {
                 this.showtree=true
             }
         }
+    },
+    computed:{
+        cuponlist(){
+            let List = [
+                {title: 'Ординар',value:'ordinar'}, 
+                {title: 'Экспресс',value:'express'},
+            ]
+            if(this.betSlipNumber>2){
+                for(let i = 2;  i < this.betSlipNumber; i++){
+                    List.push({
+                        title:`Система ${i}/${this.betSlipNumber}`,
+                        value:"system",
+                        system:i
+                    })
+                }
+            }
+            return List
+        }
+       
     }
 }
 </script>
@@ -40,8 +65,8 @@ export default {
 <style lang='scss'>
     .cupon-wrap{
         
-        width: 88px;
-        height: 20px;
+        width: 93px;
+        height: 24px;
         box-sizing: border-box;
         
         & .show_hide{
@@ -60,7 +85,7 @@ export default {
             width: 0;
             height: 0;
             position: absolute;
-            right: 10px;
+            right: 5px;
             border-top: 6px dashed;
             border-right: 5px solid transparent;
             border-left: 5px solid transparent;
