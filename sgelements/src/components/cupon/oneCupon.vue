@@ -21,7 +21,7 @@
                     </div>
                     <div>
                         <div class='line-through'>2.15</div>
-                        <div class='bold'>{{options.coeff}}</div>
+                        <div class='bold'>{{options.outcomes.coeff}}</div>
                     </div>
                 </div>
                 <div v-if ='(active.value == "ordinar")'>
@@ -29,7 +29,7 @@
                     <div>Возм. выигрыш :100 000 грн.</div>
                 </div>
 
-                    
+
             </div>
 
     </div>
@@ -72,7 +72,7 @@ export default {
             }
         },
         makeBet(){
-           
+
         },
         setMax(){
             this.doubleInputOptions.value=100;
@@ -87,16 +87,13 @@ export default {
         },
         infoOptions(){
 
-            let obj={
-                sport:{title:"Футбол",value:"footboll"},
-            }
             return{
-                sport:{title:"Футбол",value:"footboll"},
-                leagua:'Суперкубок1 УЕФА',
-                status: "Не начался",//'prematch'
+                sport:{title:this.options.sportTitle,value:this.options.view},
+                league:this.options.league,
+                status:{ title:"Не начался",value:this.options.status},//'prematch'
                 comands:`${this.options.teams[0].title} - ${this.options.teams[1].title}`
             }
-            
+
         },
         plain(){
             if(this.doubleInputOptions.value){
@@ -114,7 +111,7 @@ export default {
             padding: 5px 10px 5px 10px;
             min-height: 34px;
             display: flex;
-            align-items: center; 
+            align-items: center;
             box-sizing: border-box;
         }
 
@@ -128,13 +125,13 @@ export default {
             }
             & >div{
                 width: 50%;
-                
+
                 .double-input input{
                     width: 80px;
                 }
             }
 
-        } 
+        }
 
 
 

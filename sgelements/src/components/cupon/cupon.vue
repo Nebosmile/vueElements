@@ -11,11 +11,11 @@
                     <div class='show_hide_b_wrap'>
                         <div v-if='showtree'>Изменен 1 коэф.</div>
                         <div @click='showHide' class='show_hide_button'></div>
-                        
+
                     </div>
-                    
+
                 </div>
-                
+
             </div>
             <div class='hidewrapitem' v-if='(!showtree && betslip.length>0)'>
                 <div class='cupon-content' >
@@ -27,8 +27,8 @@
                             </div>
                         </div>
                     </div>
-                    <div v-for = '(item, index) in betslip' :key='item.id'>
-                        <oneCupon @clear=clearOne(index) :options="item" :index='index' :active='betSlipType'></oneCupon>
+                    <div v-for = '(item, name, index) in options' :key='name'>
+                        <oneCupon @clear=clearOne(key) :options="item" :index='index' :active='betSlipType'></oneCupon>
                     </div>
                     <div class='bet-info-wrap'>
                         <div class='very-light-pink-color cupon-bet-block'>
@@ -45,7 +45,7 @@
                                 </div>
                                 <sbbuttons :plain='plain'>СДЕЛАТЬ СТАВКУ</sbbuttons>
                             </div>
-                            
+
                         </div>
                     </div>
 
@@ -68,14 +68,15 @@ import cuponOptions from './cuponOptions.vue';
 
 
 export default {
+    props:{
+        options:Object // должно быть из store  но пока через props
+    },
     components:{
         oneCupon,
         selectCupon,
         sbbuttons,
         doubleInput,
         cuponOptions
-        
-        
     },
     data(){
         return{
@@ -106,7 +107,7 @@ export default {
                             title: "Гибралтар1",
                             type: "away"
                         }
-                        
+
                     ]
                 },
                                 {
@@ -125,7 +126,7 @@ export default {
                             title: "Гибралтар2",
                             type: "away"
                         }
-                        
+
                     ]
                 },
                 {
@@ -144,7 +145,7 @@ export default {
                             title: "Гибралтар3",
                             type: "away"
                         }
-                        
+
                     ]
                 },
             ],
@@ -166,7 +167,7 @@ export default {
                             title: "Гибралтар1",
                             type: "away"
                         }
-                        
+
                     ]
                 },
                                 {
@@ -185,7 +186,7 @@ export default {
                             title: "Гибралтар2",
                             type: "away"
                         }
-                        
+
                     ]
                 },
                 {
@@ -204,7 +205,7 @@ export default {
                             title: "Гибралтар3",
                             type: "away"
                         }
-                        
+
                     ]
                 },
             ]
@@ -226,13 +227,16 @@ export default {
             }
         },
         clearAll(){
-            this.betslip=[];
-            
+            // чистим store
+            // this.betslip=[];
+
         },
         clearOne(index){
-            this.betslip.splice(index, 1);
+            // удаляем из stort по ключу
+            // this.betslip.splice(index, 1);
         },
         setMax(){
+            // пока не знаю откуда берется.
             this.doubleInputOptions.value=100;
         },
 
@@ -249,22 +253,31 @@ export default {
         },
         final_coefficient(){
             let final = 0;
-            this.betslip.forEach((item)=>{
-                final+=item.coeff;
-            })
+            for(let key in this.options){
+                final+=this.options[key].outcomes.coeff;
+            }
             return final.toFixed(2);
         },
         cupon_number(){
             return this.betslip.length
+        },
+        updateObj(){
+            let obj={}
+            this.betslip.forEach((item)=>{
+                obj[item.id]={
+                    title:`${item.teams[0].title} - ${item.teams[1].title}`,
+                    coeff:item.coeff
+                }
+            })
         }
 
-        
+
     }
 }
 </script>
 
 <style lang='scss'>
-        
+
         .show_hide_b_wrap{
             display: flex;
             align-items: center;
@@ -278,8 +291,8 @@ export default {
             box-sizing: border-box;
             font-size: 12px;
             line-height: 0;
-            
-        
+
+
             &:before {
                 margin: 0;
                 cursor: pointer;
@@ -381,7 +394,7 @@ export default {
             justify-content:space-between;
             padding: 5px 10px 5px 10px;
             min-height: 36px;
-            align-items: center; 
+            align-items: center;
             box-sizing: border-box;
         }
             & .clear-all{
@@ -389,7 +402,7 @@ export default {
                 height: 24px;
                 border-radius: 5px;
                 box-sizing: border-box;
-            
+
             span{
                 position: relative;
                 top:3px;
@@ -410,7 +423,7 @@ export default {
             }
         }
     }
- 
+
     .cupon-result, .cupon-total {
         display: flex;
         justify-content:space-between;
@@ -426,7 +439,7 @@ export default {
         align-items: center;
         width: 260px;
         justify-content: space-between;
-        
+
         & >div{
             width: 100%;
         }
@@ -445,5 +458,5 @@ export default {
         margin-top:20px;
         border-bottom: solid 1px #abb9be;
     }
-    
+
 </style>

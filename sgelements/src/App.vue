@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    
+
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <!-- <sportmenu></sportmenu> -->
       <div>
@@ -8,8 +8,9 @@
         <div v-if='$route.path=="/"'>
           <img alt="Vue logo" src="./assets/logo.png">
           <router-link  to='/cupon'>Cupon</router-link>
+          <router-link  to='/betslip'>betslip</router-link>
         </div>
-        
+
         <router-view ></router-view>
       </div>
   </div>
@@ -44,7 +45,7 @@ export default {
         max-width: 285px;
         text-align: left;
 
-    }   
+    }
         .sports{
             border: solid 1px #000;
         }
@@ -52,7 +53,7 @@ export default {
             .show_hide{
                 padding-left:20px;
                 background-color: #98d2a2;
-                
+
             }
         }
         .game_wrap{

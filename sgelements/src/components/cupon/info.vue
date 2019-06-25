@@ -1,15 +1,15 @@
 <template>
     <div class='info-wrap'>
         <img src="./img/info.png" alt="">
-        <div class='info-detail border-radius overflow-hidden'> 
+        <div class='info-detail border-radius overflow-hidden'>
             <div class='info-title viridian-color'>
                 <img src="./img/football.png" alt="">
                 <div class=''>{{options.sport.title}}</div>
             </div>
-            
+
             <div class= 'info-content  very-light-pink-color'>
-                <div>{{options.leagua}}</div>
-                <div>{{options.status}}</div>
+                <div>{{options.league}}</div>
+                <div>{{options.status.title}}</div>
                 <div>{{options.comands}}</div>
             </div>
         </div>
@@ -32,9 +32,9 @@ export default {
 
 <style lang='scss'>
        .info-wrap{
-        
+
             position: relative;
-        
+
             .info-detail{
                 box-shadow: 0 8px 16px 0 rgba(23, 38, 42, 0.25);
                 min-width: 153px;
@@ -65,7 +65,7 @@ export default {
                     display: block;
                     z-index: 1;
                 }
-                
+
             }
     }
 </style>
