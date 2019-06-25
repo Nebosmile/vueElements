@@ -10,7 +10,7 @@
                         <div @click='update'>update</div>
                     </div>
                     <div class='show_hide_b_wrap'>
-                        <div v-if='showtree'>Изменен 1 коэф.</div>
+                        <div v-if='changeNumber>0'>Изменен {{changeNumber}} коэф.</div>
                         <div @click='showHide' class='show_hide_button'></div>
 
                     </div>
@@ -92,8 +92,10 @@ export default {
             },
             lastData:'',
             showtree:true,
+            changeNumber:0,
             betslip:{
                 49067900:{
+                    bet:'',
                     view:"football",
                     sportTitle:"Футбол",
                     league:"Лига Чемпионов УЕФА. Квалификация",
@@ -122,6 +124,7 @@ export default {
                     }
                 },
                 49067902:{
+                    bet:'',
                     view:"football",
                     sportTitle:"Футбол",
                     league:"Лига Чемпионов УЕФА. Квалификация",
@@ -150,6 +153,7 @@ export default {
                     }
                 },
                 49061904:{
+                    bet:'',
                     view:"football",
                     sportTitle:"Футбол",
                     league:"Лига Чемпионов УЕФА. Квалификация2",
@@ -180,6 +184,7 @@ export default {
             },
             betslipUp:{
                 49067900:{
+                    bet:'',
                     view:"football",
                     sportTitle:"Футбол",
                     league:"Лига Чемпионов УЕФА. Квалификация",
@@ -208,6 +213,7 @@ export default {
                     }
                 },
                 49067902:{
+                    bet:'',
                     view:"football",
                     sportTitle:"Футбол",
                     league:"Лига Чемпионов УЕФА. Квалификация",
@@ -236,6 +242,7 @@ export default {
                     }
                 },
                 49061904:{
+                    bet:'',
                     view:"football",
                     sportTitle:"Футбол",
                     league:"Лига Чемпионов УЕФА. Квалификация2",
@@ -302,7 +309,8 @@ export default {
             if(!this.lastData){
                 console.log(this.lastData)
                 this.lastData = this.betslip;
-                obj=this.betslip
+                obj=this.betslip;
+                this.changeNumber=0;
                 return obj;
             }else if(this.lastData){
                 for(let key in this.betslip){
@@ -310,6 +318,7 @@ export default {
                         let lastCoeff = this.lastData[key].outcomes.coeff;
                         let newCoeff = this.betslip[key].outcomes.coeff;
                         if(lastCoeff != newCoeff){
+                            this.changeNumber++;
                             this.betslip[key].outcomes.last = lastCoeff;
                             this.betslip[key].outcomes.change = newCoeff - lastCoeff
                             if(newCoeff>lastCoeff){
@@ -321,14 +330,13 @@ export default {
 
                     } 
                 }
-                this.lastData = ''
                 obj=this.betslip
                 return obj;
             }
             
         },
         plain(){
-            if(this.doubleInputOptions.value){
+            if( this.betSlipType.value!='ordinar' && this.doubleInputOptions.value){
                 return true
             }
             return false;
