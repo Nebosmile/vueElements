@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="">
-        <div v-for='item in data[0].categories[0].competitions[0].games[0].markets' class="">
-            <div @click='greateBetList(item,elem)' v-for="elem in item.outcomes" class="oneBlock">
+        <div v-for='item in data[0].categories[0].competitions[0].games[0].markets' :key='item.id' class="">
+            <div @click='greateBetList(item,elem)' v-for="elem in item.outcomes" :key='elem.id' class="oneBlock">
                 {{elem}}
             </div>
 
@@ -25,6 +25,92 @@ export default {
     },
     data() {
         return{
+             betslip:{
+                49067900:{
+                    view:"football",
+                    sportTitle:"Футбол",
+                    league:"Лига Чемпионов УЕФА. Квалификация",
+                    status:"prematch",
+                    teams:[
+                        {
+                            "id": 362872,
+                            "type": "home",
+                            "title": "Трe Пенн"
+                        }, {
+                            "id": 336567,
+                            "type": "away",
+                            "title": "ФК Санта Колома"
+                        }
+                    ],
+                    markets:{
+                        "id": 20659423,
+                        "period": "T2",
+                        "type": "MatchResult"
+                    },
+                    outcomes:{
+                        "id": 49067900,
+                        "coeff": 3.9,
+                        "value": "2.5",
+                        "type": "Over"
+                    }
+                },
+                49067902:{
+                    view:"football",
+                    sportTitle:"Футбол",
+                    league:"Лига Чемпионов УЕФА. Квалификация",
+                    status:"prematch",
+                    teams:[
+                        {
+                            "id": 362872,
+                            "type": "home",
+                            "title": "Трe Пенн1"
+                        }, {
+                            "id": 336567,
+                            "type": "away",
+                            "title": "ФК Санта Колома1"
+                        }
+                    ],
+                    markets:{
+                        "id": 20659423,
+                        "period": "T2",
+                        "type": "MatchResult"
+                    },
+                    outcomes:{
+                        "id": 49067900,
+                        "coeff": 3.9,
+                        "value": "2.5",
+                        "type": "Over"
+                    }
+                },
+                49061904:{
+                    view:"football",
+                    sportTitle:"Футбол",
+                    league:"Лига Чемпионов УЕФА. Квалификация2",
+                    status:"prematch",
+                    teams:[
+                        {
+                            "id": 362872,
+                            "type": "home",
+                            "title": "Трe Пенн2"
+                        }, {
+                            "id": 336567,
+                            "type": "away",
+                            "title": "ФК Санта Колома2"
+                        }
+                    ],
+                    markets:{
+                        "id": 20659423,
+                        "period": "T2",
+                        "type": "MatchResult"
+                    },
+                    outcomes:{
+                        "id": 49067900,
+                        "coeff": 3.9,
+                        "value": "2.5",
+                        "type": "Over"
+                    }
+                }
+            },
             betSlipList:{},
             "data": [{
                 "id": 10121,
@@ -839,8 +925,8 @@ export default {
     methods:{
         greateBetList(market,outcomes){
             let oneBetSlip ={
-                view:this.data.view,
-                sportTitle:this.data.title,
+                view:this.data[0].view,
+                sportTitle:this.data[0].title,
                 league:this.data[0].categories[0].competitions[0].title,
                 status:this.data[0].categories[0].competitions[0].games[0].status,
                 teams:this.data[0].categories[0].competitions[0].games[0].teams,
@@ -851,7 +937,8 @@ export default {
                 },
                 outcomes:outcomes
             }
-            this.betSlipList[outcomes.id] =  oneBetSlip;
+            this.$set(this.betSlipList,outcomes.id,oneBetSlip)
+            // this.betSlipList[outcomes.id] =  oneBetSlip;
         }
     }
 }

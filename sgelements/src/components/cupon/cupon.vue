@@ -7,6 +7,7 @@
                     <div>
                         <span>Купон</span>
                         <span class='cupon-numbers dusty-orange-color'>{{cupon_number}}</span>
+                        <div @click='update'>update</div>
                     </div>
                     <div class='show_hide_b_wrap'>
                         <div v-if='showtree'>Изменен 1 коэф.</div>
@@ -17,18 +18,18 @@
                 </div>
 
             </div>
-            <div class='hidewrapitem' v-if='(!showtree && betslip.length>0)'>
+            <div class='hidewrapitem' v-if='(!showtree && cupon_number>0)'>
                 <div class='cupon-content' >
                     <div class='very-light-pink-color'>
                         <div class='cupon-instruments'>
-                        <selectCupon @change="change_type" v-if='betslip.length >= 2' :betSlipNumber='betslip.length'></selectCupon>
+                        <selectCupon @change="change_type" v-if='cupon_number >= 2' :betSlipNumber='cupon_number'></selectCupon>
                             <div @click='clearAll' class = 'clear-all very-light-pink-two-color'>
                                 <span>&#128465;</span>   Очистить все
                             </div>
                         </div>
                     </div>
-                    <div v-for = '(item, name, index) in options' :key='name'>
-                        <oneCupon @clear=clearOne(key) :options="item" :index='index' :active='betSlipType'></oneCupon>
+                    <div v-for = '(item, name, index) in upData' :key='name'>
+                        <oneCupon @clear=clearOne(name) :options="item" :index='index' :active='betSlipType'></oneCupon>
                     </div>
                     <div class='bet-info-wrap'>
                         <div class='very-light-pink-color cupon-bet-block'>
@@ -68,9 +69,9 @@ import cuponOptions from './cuponOptions.vue';
 
 
 export default {
-    props:{
-        options:Object // должно быть из store  но пока через props
-    },
+    // props:{
+    //     options:Object // должно быть из store  но пока через props
+    // },
     components:{
         oneCupon,
         selectCupon,
@@ -89,126 +90,180 @@ export default {
                 buttonName:"MAX",
                 value:''
             },
-            betslip:
-            [
-                {
-                    coeff: 1.12,
-                    id: 48596896,
-                    type: "Over",
-                    value: "0.5",
-                    teams:[
-                        {
-                            id: 372711,
-                            title: "Грузия1",
-                            type: "home"
-                        },
-                        {
-                            id: 403193,
-                            title: "Гибралтар1",
-                            type: "away"
-                        }
-
-                    ]
-                },
-                                {
-                    coeff: 2.11,
-                    id: 48196896,
-                    type: "Over",
-                    value: "0.5",
-                    teams:[
-                        {
-                            id: 372711,
-                            title: "Грузия2",
-                            type: "home"
-                        },
-                        {
-                            id: 403193,
-                            title: "Гибралтар2",
-                            type: "away"
-                        }
-
-                    ]
-                },
-                {
-                    coeff: 4.52,
-                    id: 48596596,
-                    type: "Over",
-                    value: "0.5",
-                    teams:[
-                        {
-                            id: 372711,
-                            title: "Грузия3",
-                            type: "home"
-                        },
-                        {
-                            id: 403193,
-                            title: "Гибралтар3",
-                            type: "away"
-                        }
-
-                    ]
-                },
-            ],
+            lastData:'',
             showtree:true,
-            upData:[
-                                {
-                    coeff: 1.52,
-                    id: 48596896,
-                    type: "Over",
-                    value: "0.5",
+            betslip:{
+                49067900:{
+                    view:"football",
+                    sportTitle:"Футбол",
+                    league:"Лига Чемпионов УЕФА. Квалификация",
+                    status:"prematch",
                     teams:[
                         {
-                            id: 372711,
-                            title: "Грузия1",
-                            type: "home"
-                        },
-                        {
-                            id: 403193,
-                            title: "Гибралтар1",
-                            type: "away"
+                            "id": 362872,
+                            "type": "home",
+                            "title": "Трe Пенн"
+                        }, {
+                            "id": 336567,
+                            "type": "away",
+                            "title": "ФК Санта Колома"
                         }
-
-                    ]
+                    ],
+                    markets:{
+                        "id": 20659423,
+                        "period": "T2",
+                        "type": "MatchResult"
+                    },
+                    outcomes:{
+                        "id": 49067900,
+                        "coeff": 3.9,
+                        "value": "2.5",
+                        "type": "Over"
+                    }
                 },
-                                {
-                    coeff: 2.01,
-                    id: 48196896,
-                    type: "Over",
-                    value: "0.5",
+                49067902:{
+                    view:"football",
+                    sportTitle:"Футбол",
+                    league:"Лига Чемпионов УЕФА. Квалификация",
+                    status:"prematch",
                     teams:[
                         {
-                            id: 372711,
-                            title: "Грузия2",
-                            type: "home"
-                        },
-                        {
-                            id: 403193,
-                            title: "Гибралтар2",
-                            type: "away"
+                            "id": 362872,
+                            "type": "home",
+                            "title": "Трe Пенн1"
+                        }, {
+                            "id": 336567,
+                            "type": "away",
+                            "title": "ФК Санта Колома1"
                         }
-
-                    ]
+                    ],
+                    markets:{
+                        "id": 20659423,
+                        "period": "T2",
+                        "type": "MatchResult"
+                    },
+                    outcomes:{
+                        "id": 49067900,
+                        "coeff": 3.9,
+                        "value": "2.5",
+                        "type": "Over"
+                    }
                 },
-                {
-                    coeff: 4.12,
-                    id: 48596596,
-                    type: "Over",
-                    value: "0.5",
+                49061904:{
+                    view:"football",
+                    sportTitle:"Футбол",
+                    league:"Лига Чемпионов УЕФА. Квалификация2",
+                    status:"prematch",
                     teams:[
                         {
-                            id: 372711,
-                            title: "Грузия3",
-                            type: "home"
-                        },
-                        {
-                            id: 403193,
-                            title: "Гибралтар3",
-                            type: "away"
+                            "id": 362872,
+                            "type": "home",
+                            "title": "Трe Пенн2"
+                        }, {
+                            "id": 336567,
+                            "type": "away",
+                            "title": "ФК Санта Колома2"
                         }
-
-                    ]
+                    ],
+                    markets:{
+                        "id": 20659423,
+                        "period": "T2",
+                        "type": "MatchResult"
+                    },
+                    outcomes:{
+                        "id": 49067900,
+                        "coeff": 3.9,
+                        "value": "2.5",
+                        "type": "Over"
+                    }
+                }
+            },
+            betslipUp:{
+                49067900:{
+                    view:"football",
+                    sportTitle:"Футбол",
+                    league:"Лига Чемпионов УЕФА. Квалификация",
+                    status:"prematch",
+                    teams:[
+                        {
+                            "id": 362872,
+                            "type": "home",
+                            "title": "Трe Пенн"
+                        }, {
+                            "id": 336567,
+                            "type": "away",
+                            "title": "ФК Санта Колома"
+                        }
+                    ],
+                    markets:{
+                        "id": 20659423,
+                        "period": "T2",
+                        "type": "MatchResult"
+                    },
+                    outcomes:{
+                        "id": 49067900,
+                        "coeff": 2.9,
+                        "value": "2.5",
+                        "type": "Over"
+                    }
                 },
-            ]
+                49067902:{
+                    view:"football",
+                    sportTitle:"Футбол",
+                    league:"Лига Чемпионов УЕФА. Квалификация",
+                    status:"prematch",
+                    teams:[
+                        {
+                            "id": 362872,
+                            "type": "home",
+                            "title": "Трe Пенн1"
+                        }, {
+                            "id": 336567,
+                            "type": "away",
+                            "title": "ФК Санта Колома1"
+                        }
+                    ],
+                    markets:{
+                        "id": 20659423,
+                        "period": "T2",
+                        "type": "MatchResult"
+                    },
+                    outcomes:{
+                        "id": 49067900,
+                        "coeff": 4.9,
+                        "value": "2.5",
+                        "type": "Over"
+                    }
+                },
+                49061904:{
+                    view:"football",
+                    sportTitle:"Футбол",
+                    league:"Лига Чемпионов УЕФА. Квалификация2",
+                    status:"prematch",
+                    teams:[
+                        {
+                            "id": 362872,
+                            "type": "home",
+                            "title": "Трe Пенн2"
+                        }, {
+                            "id": 336567,
+                            "type": "away",
+                            "title": "ФК Санта Колома2"
+                        }
+                    ],
+                    markets:{
+                        "id": 20659423,
+                        "period": "T2",
+                        "type": "MatchResult"
+                    },
+                    outcomes:{
+                        "id": 49067900,
+                        "coeff": 3.9,
+                        "value": "2.5",
+                        "type": "Over"
+                    }
+                }
+            },
         }
     },
     methods:{
@@ -216,7 +271,7 @@ export default {
             this.betSlipType=e;
         },
         update(){
-
+            this.betslip=this.betslipUp;
         },
         showHide(){
 
@@ -228,12 +283,12 @@ export default {
         },
         clearAll(){
             // чистим store
-            // this.betslip=[];
+            this.betslip={};
 
         },
-        clearOne(index){
+        clearOne(key){
             // удаляем из stort по ключу
-            // this.betslip.splice(index, 1);
+            this.$delete(this.betslip,key)
         },
         setMax(){
             // пока не знаю откуда берется.
@@ -242,8 +297,35 @@ export default {
 
     },
     computed:{
-        showObj(){
+        upData(){
+            let obj={}
+            if(!this.lastData){
+                console.log(this.lastData)
+                this.lastData = this.betslip;
+                obj=this.betslip
+                return obj;
+            }else if(this.lastData){
+                for(let key in this.betslip){
+                    if(this.lastData[key]){
+                        let lastCoeff = this.lastData[key].outcomes.coeff;
+                        let newCoeff = this.betslip[key].outcomes.coeff;
+                        if(lastCoeff != newCoeff){
+                            this.betslip[key].outcomes.last = lastCoeff;
+                            this.betslip[key].outcomes.change = newCoeff - lastCoeff
+                            if(newCoeff>lastCoeff){
+                                this.betslip[key].outcomes.changeLine='up'
+                            }else{
+                                this.betslip[key].outcomes.changeLine='down'
+                            }
+                        }
 
+                    } 
+                }
+                this.lastData = ''
+                obj=this.betslip
+                return obj;
+            }
+            
         },
         plain(){
             if(this.doubleInputOptions.value){
@@ -253,23 +335,23 @@ export default {
         },
         final_coefficient(){
             let final = 0;
-            for(let key in this.options){
-                final+=this.options[key].outcomes.coeff;
+            for(let key in this.betslip){
+                final+=this.betslip[key].outcomes.coeff;
             }
             return final.toFixed(2);
         },
         cupon_number(){
-            return this.betslip.length
+            return Object.keys(this.betslip).length
         },
-        updateObj(){
-            let obj={}
-            this.betslip.forEach((item)=>{
-                obj[item.id]={
-                    title:`${item.teams[0].title} - ${item.teams[1].title}`,
-                    coeff:item.coeff
-                }
-            })
-        }
+        // updateObj(){
+        //     let obj={}
+        //     this.betslip.forEach((item)=>{
+        //         obj[item.id]={
+        //             title:`${item.teams[0].title} - ${item.teams[1].title}`,
+        //             coeff:item.coeff
+        //         }
+        //     })
+        // }
 
 
     }

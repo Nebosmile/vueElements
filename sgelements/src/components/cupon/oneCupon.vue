@@ -20,8 +20,9 @@
                         <div>основное время победа Тоттенхем</div>
                     </div>
                     <div>
-                        <div class='line-through'>2.15</div>
-                        <div class='bold'>{{options.outcomes.coeff}}</div>
+                        <div v-if='options.outcomes.last' class='line-through'>{{options.outcomes.last}}</div>
+                        <div :class="{up :(options.outcomes.changeLine=='up'),down:(options.outcomes.changeLine=='down')}" class='bold'>{{options.outcomes.coeff}}</div>
+                        
                     </div>
                 </div>
                 <div v-if ='(active.value == "ordinar")'>
@@ -117,17 +118,61 @@ export default {
 
         .cupon-result{
             width: 100%;
+            & >div{
+                padding-right: 10px;
+            }
+            & .down, & .up {
+                position: relative;
+            }
+            .down::before{
+                content:'';
+                right: -15px;
+                bottom: 4px;
+                height: 0;
+                border-right: 5px solid transparent;
+                border-left: 5px solid transparent;
+                position:absolute;
+                border-bottom: 0;
+                border-top: 6px dashed #f23b38;
+
+            }
+            .up::before{
+                content:'';
+                right: -15px;
+                bottom: 4px;
+                width: 0;
+                height: 0;
+                border-right: 5px solid transparent;
+                border-left: 5px solid transparent;
+                position:absolute;
+                border-bottom: 6px dashed #23945c;
+                border-top: 0;
+            }
         }
         .ordinar{
-            .cupon-result div{
-                padding-right: 5px;
+            .cupon-result{
+                .down::before{
+                    content:'';
+                    right: -10px;
+                    bottom: 0;
+                }
+                .up::before{
+                    content:'';
+                    right: -10px;
+                    bottom: 0;
+                }
+            }
+            .cupon-result > div{
+                margin-right: 5px;
+                padding-right: 0;
                 box-sizing: border-box;
             }
             & >div{
                 width: 50%;
 
                 .double-input input{
-                    width: 80px;
+                    width: 50%;
+                    min-width: 80px;
                 }
             }
 
